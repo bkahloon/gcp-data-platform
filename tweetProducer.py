@@ -2,10 +2,12 @@
 import datetime
 import json
 import time
-
+import sys
 import tweepy
 from google.cloud import pubsub_v1
 from tweepy.streaming import StreamListener
+
+hashtags = sys.argv
 
 # Config
 
@@ -20,7 +22,7 @@ auth.set_access_token(creds)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=False)
 
 # Define the list of terms to listen to
-lst_hashtags = ["#kobe", "#nba", "#lebron"]
+lst_hashtags = ["#kobe", "#nba", "#lebron"] + hashtags
 
 # Method to push messages to pubsub
 def write_to_pubsub(data):
