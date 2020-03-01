@@ -1,4 +1,4 @@
 provider "google" {
-  region      = "us-west1"
+  region = "us-west1"
 }
 

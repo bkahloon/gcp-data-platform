@@ -1,7 +1,7 @@
 resource "google_compute_instance" "test" {
-  name         = "flask-vm-${var.compute_instance_name}"
-  machine_type = "f1-micro"
-  zone         = "us-central1-a"
+  name         = "${var.compute_instance_name}"
+  machine_type = var.machine_type
+  zone         = var.region
 
   boot_disk {
     initialize_params {
@@ -9,7 +9,7 @@ resource "google_compute_instance" "test" {
     }
   }
 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask"
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask; pip install tweepy; pip install --upgrade google-cloud-pubsub "
 
   //vpc
   network_interface {
@@ -17,6 +17,9 @@ resource "google_compute_instance" "test" {
 
     access_config {
     }
+  }
 
+  service_account {
+    scopes = ["pubsub"]
   }
 }
