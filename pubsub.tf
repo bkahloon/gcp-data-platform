@@ -7,7 +7,7 @@ module "pubsub_tweets" {
 
 }
 
-resource "google_pubsub_subscription" "dataflow-tweets" {
+resource "google_pubsub_subscription" "dataflow" {
   name  = "dataflow-tweets-sub"
   topic = module.pubsub_tweets.topic
 
