@@ -10,8 +10,10 @@ from tweepy.streaming import StreamListener
 hashtags = sys.argv
 
 # Config
-
-publisher = pubsub_v1.PublisherClient()
+# enable message ordering
+publisher = pubsub_v1.PublisherClient(publisher_options= pubsub_v1.types.PublisherOptions(
+        enable_message_ordering=True
+    ))
 topic_path = publisher.topic_path("experimental-4567", "tweets")
 
 # Authenticate
@@ -21,8 +23,6 @@ auth.set_access_token(creds)
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=False)
 
-# Define the list of terms to listen to
-lst_hashtags = ["#kobe", "#nba", "#lebron"] + hashtags
 
 # Method to push messages to pubsub
 def write_to_pubsub(data):
@@ -76,7 +76,6 @@ def reformat_tweet(tweet):
 
     return processed_doc
 
-# Custom listener class
 class StdOutListener(StreamListener):
     """ A listener handles tweets that are received from the stream.
     This is a basic listener that just pushes tweets to pubsub
@@ -100,4 +99,3 @@ class StdOutListener(StreamListener):
 # Start listening
 l = StdOutListener()
 stream = tweepy.Stream(auth, l, tweet_mode='extended')
-stream.filter(track=lst_hashtags)
