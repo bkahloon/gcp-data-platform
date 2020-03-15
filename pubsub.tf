@@ -7,6 +7,15 @@ module "pubsub_tweets" {
 
 }
 
+module "pubsub_tweets_ouput" {
+  source  = "terraform-google-modules/pubsub/google"
+  version = "~> 1.0"
+
+  topic      = "${var.pubsub_tweet_topic}_output"
+  project_id = "${var.project_id}"
+
+}
+
 resource "google_pubsub_subscription" "dataflow" {
   name  = "dataflow-tweets-sub"
   topic = module.pubsub_tweets.topic

@@ -13,3 +13,15 @@ output "pubsub_tweets_topic" {
 output "pubsub_tweets_uri" {
   value = "${module.pubsub_tweets.uri}"
 }
+
+output "pubsub_tweets_output_id" {
+  value = "${module.pubsub_tweets_ouput.id}"
+}
+
+output "pubsub_tweets_output_topic" {
+  value = "${module.pubsub_tweets_ouput.topic}"
+}
+
+output "pubsub_tweets_output_uri" {
+  value = "${module.pubsub_tweets_ouput.uri}"
+}
